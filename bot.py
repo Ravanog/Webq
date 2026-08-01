@@ -5,7 +5,7 @@ from telegram.ext import ApplicationBuilder, MessageHandler, filters, ContextTyp
 from github import Github
 
 # --- CONFIGURATION ---
-TELEGRAM_BOT_TOKEN = "YOUR_TELEGRAM_BOT_TOKEN"
+TELEGRAM_BOT_TOKEN = "8675260165:AAHaMWq6b5-nVy_42Szt_FQqT04kwZifPMM"
 CHANNEL_ID = -1001234567890  # Replace with your Telegram Channel ID (include the -100 prefix)
 
 GITHUB_TOKEN = "YOUR_GITHUB_PERSONAL_ACCESS_TOKEN"
