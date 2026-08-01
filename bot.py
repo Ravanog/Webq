@@ -170,6 +170,72 @@ if __name__ == '__main__':
     except ValueError:
         pass
 
+
+
     logging.info("Bot starting polling...")
     app.run_polling()
+
+# --- ADD THIS TO THE BOTTOM OF bot.py ---
+
+def app(environ, start_response):
+    """
+    WSGI handler for Vercel Serverless Function
+    """
+    import io
+    
+    # Simple WSGI wrapper around your MovieAPIHandler
+    path = environ.get('PATH_INFO', '/')
+    query = environ.get('QUERY_STRING', '')
+    if query:
+        path += '?' + query
+
+    # Create dummy HTTP server request handler wrapper
+    class DummyRequest:
+        def makefile(self, *args, **kwargs):
+            return io.BytesIO(b"")
+
+    try:
+        handler = MovieAPIHandler(DummyRequest(), ('127.0.0.1', 8000), None)
+        handler.path = path
+        handler.command = environ.get('REQUEST_METHOD', 'GET')
+        
+        # Capture response outputs
+        output_buffer = io.BytesIO()
+        handler.wfile = output_buffer
+        
+        # Route handler methods
+        if handler.command == 'GET':
+            handler.do_GET()
+        elif handler.command == 'OPTIONS':
+            handler.do_OPTIONS()
+        else:
+            handler.send_error(405, "Method Not Allowed")
+
+        # Parse response
+        response_bytes = output_buffer.getvalue()
+        headers_end = response_bytes.find(b"\r\n\r\n")
+        
+        if headers_end != -1:
+            raw_headers = response_bytes[:headers_end].decode('utf-8', errors='ignore').split('\r\n')
+            body = response_bytes[headers_end + 4:]
+            
+            status_line = raw_headers[0].split(' ', 2)
+            status = f"{status_line[1]} {status_line[2]}" if len(status_line) > 2 else "200 OK"
+            
+            headers = []
+            for h in raw_headers[1:]:
+                if ':' in h:
+                    k, v = h.split(':', 1)
+                    headers.append((k.strip(), v.strip()))
+            
+            start_response(status, headers)
+            return [body]
+        else:
+            start_response('200 OK', [('Content-Type', 'application/json')])
+            return [response_bytes]
+            
+    except Exception as e:
+        start_response('500 Internal Server Error', [('Content-Type', 'text/plain')])
+        return [str(e).encode('utf-8')]
+        
     
