@@ -2,6 +2,8 @@ import os
 import json
 import logging
 import sys
+import threading
+from http.server import HTTPServer, BaseHTTPRequestHandler
 from telegram import Update
 from telegram.ext import ApplicationBuilder, MessageHandler, filters, ContextTypes
 from github import Github
@@ -12,6 +14,22 @@ logging.basicConfig(
     level=logging.INFO,
     stream=sys.stdout
 )
+
+# Dummy HTTP Server to pass Koyeb Health Checks on Port 8000
+class HealthCheckHandler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.send_header('Content-type', 'text/plain')
+        self.end_headers()
+        self.wfile.write(b"OK")
+    def log_message(self, format, *args):
+        return  # Silence HTTP server logs
+
+def run_health_check_server():
+    port = int(os.getenv("PORT", 8000))
+    server = HTTPServer(('0.0.0.0', port), HealthCheckHandler)
+    logging.info(f"Health check server running on port {port}...")
+    server.serve_forever()
 
 # Fetch Environment Variables
 TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
@@ -107,6 +125,9 @@ async def handle_channel_post(update: Update, context: ContextTypes.DEFAULT_TYPE
         logging.error(f"Error parsing channel post: {str(e)}")
 
 if __name__ == '__main__':
+    # Start background thread for Koyeb health check port
+    threading.Thread(target=run_health_check_server, daemon=True).start()
+
     logging.info("Starting Telegram Bot listener on Koyeb...")
     app = ApplicationBuilder().token(TELEGRAM_BOT_TOKEN).build()
     
