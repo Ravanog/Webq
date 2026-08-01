@@ -3,6 +3,7 @@ import re
 import sys
 import logging
 import threading
+from bson import json_util
 from http.server import HTTPServer, BaseHTTPRequestHandler
 from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, filters, ContextTypes
@@ -16,19 +17,33 @@ logging.basicConfig(
 )
 
 # Dummy HTTP Server for Koyeb Health Checks
-class HealthCheckHandler(BaseHTTPRequestHandler):
+
+
+class WebAndHealthHandler(BaseHTTPRequestHandler):
     def do_GET(self):
+        # CORS Headers so your website can access the data
         self.send_response(200)
-        self.send_header('Content-type', 'text/plain')
+        self.send_header('Content-type', 'application/json')
+        self.send_header('Access-Control-Allow-Origin', '*')
         self.end_headers()
-        self.wfile.write(b"OK")
-    def log_message(self, format, *args):
-        return
+
+        if self.path == '/api/movies' or self.path == '/movies':
+            try:
+                # Fetch all movies from MongoDB, sorted by latest
+                movies = list(movies_collection.find({}, {'_id': 0}))
+                response_data = json.dumps({"popular": movies})
+                self.wfile.write(response_data.encode('utf-8'))
+            except Exception as e:
+                self.wfile.write(json.dumps({"error": str(e)}).encode('utf-8'))
+        else:
+            # Koyeb Health Check Route
+            self.wfile.write(b'{"status": "OK"}')
 
 def run_health_check_server():
     port = int(os.getenv("PORT", 8000))
-    server = HTTPServer(('0.0.0.0', port), HealthCheckHandler)
+    server = HTTPServer(('0.0.0.0', port), WebAndHealthHandler)
     server.serve_forever()
+
 
 # Environment Variables
 TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
