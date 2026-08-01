@@ -1,59 +1,71 @@
+import os
 import json
-import re
+import logging
 from telegram import Update
 from telegram.ext import ApplicationBuilder, MessageHandler, filters, ContextTypes
 from github import Github
 
-# --- CONFIGURATION ---
-TELEGRAM_BOT_TOKEN = "8675260165:AAHaMWq6b5-nVy_42Szt_FQqT04kwZifPMM"
-CHANNEL_ID = -1003224239956  # Replace with your Telegram Channel ID (include the -100 prefix)
+# Setup Logging
+logging.basicConfig(
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    level=logging.INFO
+)
 
-GITHUB_TOKEN = "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"
-REPO_NAME = "Ravanog/Webq"  # e.g., "hari/moviez-site"
-JSON_FILE_PATH = "movies.json" # Path to movies.json in repo
+# Load Environment Variables (Passed by Koyeb)
+TELEGRAM_BOT_TOKEN = os.getenv("8675260165:AAHaMWq6b5-nVy_42Szt_FQqT04kwZifPMM")
+CHANNEL_ID = int(os.getenv("CHANNEL_ID", "-1003224239956"))
+GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
+REPO_NAME = os.getenv("Ravanog/Webq")  # e.g., "username/moviez-app"
+JSON_FILE_PATH = os.getenv("JSON_FILE_PATH", "movies.json")
 
-# --- GITHUB HELPER FUNCTION ---
-def update_github_json(new_movie_data):
-    g = Github(GITHUB_TOKEN)
-    repo = g.get_repo(REPO_NAME)
-    
-    # Fetch current movies.json from GitHub
-    contents = repo.get_contents(JSON_FILE_PATH)
-    current_data = json.loads(contents.decoded_content.decode('utf-8'))
-    
-    if "popular" not in current_data:
-        current_data["popular"] = []
-    
-    # Check if movie already exists to prevent duplicates
-    existing_titles = [m.get("title", "").lower() for m in current_data["popular"]]
-    if new_movie_data.get("title", "").lower() in existing_titles:
-        print(f"Skipped duplicate: {new_movie_data.get('title')}")
+def update_github_json(new_movie_data: dict) -> bool:
+    """Fetches movies.json, appends new movie, and commits back to GitHub."""
+    try:
+        g = Github(GITHUB_TOKEN)
+        repo = g.get_repo(REPO_NAME)
+        
+        # Get existing file content
+        contents = repo.get_contents(JSON_FILE_PATH)
+        current_data = json.loads(contents.decoded_content.decode('utf-8'))
+        
+        if "popular" not in current_data:
+            current_data["popular"] = []
+            
+        # Prevent duplicate entries by title
+        existing_titles = [m.get("title", "").strip().lower() for m in current_data["popular"]]
+        if new_movie_data.get("title", "").strip().lower() in existing_titles:
+            logging.info(f"Skipping duplicate movie: {new_movie_data.get('title')}")
+            return False
+
+        # Add new movie at the beginning of the array
+        current_data["popular"].insert(0, new_movie_data)
+        
+        # Write back to GitHub
+        updated_json_str = json.dumps(current_data, indent=2)
+        repo.update_file(
+            path=contents.path,
+            message=f"Bot: Added '{new_movie_data.get('title')}'",
+            content=updated_json_str,
+            sha=contents.sha
+        )
+        logging.info(f"Successfully added '{new_movie_data.get('title')}' to GitHub!")
+        return True
+    except Exception as e:
+        logging.error(f"Error updating GitHub repository: {str(e)}")
         return False
 
-    # Insert new movie at the top
-    current_data["popular"].insert(0, new_movie_data)
-    
-    # Update GitHub
-    updated_json_str = json.dumps(current_data, indent=2)
-    repo.update_file(
-        path=contents.path,
-        message=f"Bot: Added {new_movie_data['title']} from Channel",
-        content=updated_json_str,
-        sha=contents.sha
-    )
-    return True
-
-# --- CHANNEL POST PARSER ---
 async def handle_channel_post(update: Update, context: ContextTypes.DEFAULT_TYPE):
     post = update.channel_post
-    if not post or not (post.text or post.caption):
+    if not post:
         return
 
-    # Extract text from standard message or image caption
-    content = post.text if post.text else post.caption
-    
-    # Simple check to ensure it's a movie post
-    if "#movie" not in content.lower() and "title:" not in content.lower():
+    # Extract text from standard text post or photo caption
+    content = post.text or post.caption
+    if not content:
+        return
+
+    # Filter out posts that don't match our key format
+    if "title:" not in content.lower():
         return
 
     try:
@@ -79,27 +91,21 @@ async def handle_channel_post(update: Update, context: ContextTypes.DEFAULT_TYPE
                 elif key == "stream": movie_dict["streamLink"] = value
                 elif key == "telegram": movie_dict["telegramLink"] = value
 
-        # If poster isn't provided as a link, but an image was uploaded with caption
-        if "poster" not in movie_dict and post.photo:
-            # Gets the high-res photo link via Telegram File ID (Optional extension)
-            photo_file = await context.bot.get_file(post.photo[-1].file_id)
-            movie_dict["poster"] = photo_file.file_path
-
         if "title" in movie_dict:
-            success = update_github_json(movie_dict)
-            if success:
-                print(f"Successfully published {movie_dict['title']} to website!")
+            update_github_json(movie_dict)
 
     except Exception as e:
-        print(f"Error parsing channel post: {str(e)}")
+        logging.error(f"Error processing post: {str(e)}")
 
-# --- MAIN RUNNER ---
 if __name__ == '__main__':
+    if not all([TELEGRAM_BOT_TOKEN, CHANNEL_ID, GITHUB_TOKEN, REPO_NAME]):
+        raise ValueError("Missing critical Environment Variables. Check your Koyeb settings.")
+
     app = ApplicationBuilder().token(TELEGRAM_BOT_TOKEN).build()
     
-    # Listen only to channel posts from the specified channel
+    # Filter messages coming ONLY from your targeted Telegram Channel
     channel_filter = filters.Chat(chat_id=CHANNEL_ID) & filters.UpdateType.CHANNEL_POST
     app.add_handler(MessageHandler(channel_filter, handle_channel_post))
     
-    print("Bot is listening for channel posts...")
+    logging.info("Starting Koyeb Bot listener...")
     app.run_polling()
