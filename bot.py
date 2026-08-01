@@ -1,46 +1,60 @@
 import os
 import json
 import logging
+import sys
 from telegram import Update
 from telegram.ext import ApplicationBuilder, MessageHandler, filters, ContextTypes
 from github import Github
 
-# Setup Logging
+# Force stdout logging
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-    level=logging.INFO
+    level=logging.INFO,
+    stream=sys.stdout
 )
 
-# Load Environment Variables (Passed by Koyeb)
-TELEGRAM_BOT_TOKEN = os.getenv("8675260165:AAHaMWq6b5-nVy_42Szt_FQqT04kwZifPMM")
-CHANNEL_ID = int(os.getenv("CHANNEL_ID", "-1003224239956"))
-GITHUB_TOKEN = os.getenv("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")
-REPO_NAME = os.getenv("Ravanog/Webq")  # e.g., "username/moviez-app"
+# Fetch Environment Variables
+TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
+CHANNEL_ID_RAW = os.getenv("CHANNEL_ID")
+GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
+REPO_NAME = os.getenv("REPO_NAME")
 JSON_FILE_PATH = os.getenv("JSON_FILE_PATH", "movies.json")
 
+# Variable Verification
+missing_vars = []
+if not TELEGRAM_BOT_TOKEN: missing_vars.append("TELEGRAM_BOT_TOKEN")
+if not CHANNEL_ID_RAW: missing_vars.append("CHANNEL_ID")
+if not GITHUB_TOKEN: missing_vars.append("GITHUB_TOKEN")
+if not REPO_NAME: missing_vars.append("REPO_NAME")
+
+if missing_vars:
+    logging.error(f"CRITICAL ERROR: Missing Environment Variables in Koyeb: {', '.join(missing_vars)}")
+    sys.exit(1)
+
+try:
+    CHANNEL_ID = int(CHANNEL_ID_RAW.strip())
+except ValueError:
+    logging.error(f"CRITICAL ERROR: CHANNEL_ID must be a valid integer! Got: '{CHANNEL_ID_RAW}'")
+    sys.exit(1)
+
 def update_github_json(new_movie_data: dict) -> bool:
-    """Fetches movies.json, appends new movie, and commits back to GitHub."""
     try:
         g = Github(GITHUB_TOKEN)
         repo = g.get_repo(REPO_NAME)
         
-        # Get existing file content
         contents = repo.get_contents(JSON_FILE_PATH)
         current_data = json.loads(contents.decoded_content.decode('utf-8'))
         
         if "popular" not in current_data:
             current_data["popular"] = []
             
-        # Prevent duplicate entries by title
         existing_titles = [m.get("title", "").strip().lower() for m in current_data["popular"]]
         if new_movie_data.get("title", "").strip().lower() in existing_titles:
             logging.info(f"Skipping duplicate movie: {new_movie_data.get('title')}")
             return False
 
-        # Add new movie at the beginning of the array
         current_data["popular"].insert(0, new_movie_data)
         
-        # Write back to GitHub
         updated_json_str = json.dumps(current_data, indent=2)
         repo.update_file(
             path=contents.path,
@@ -59,13 +73,8 @@ async def handle_channel_post(update: Update, context: ContextTypes.DEFAULT_TYPE
     if not post:
         return
 
-    # Extract text from standard text post or photo caption
     content = post.text or post.caption
-    if not content:
-        return
-
-    # Filter out posts that don't match our key format
-    if "title:" not in content.lower():
+    if not content or "title:" not in content.lower():
         return
 
     try:
@@ -95,17 +104,14 @@ async def handle_channel_post(update: Update, context: ContextTypes.DEFAULT_TYPE
             update_github_json(movie_dict)
 
     except Exception as e:
-        logging.error(f"Error processing post: {str(e)}")
+        logging.error(f"Error parsing channel post: {str(e)}")
 
 if __name__ == '__main__':
-    if not all([TELEGRAM_BOT_TOKEN, CHANNEL_ID, GITHUB_TOKEN, REPO_NAME]):
-        raise ValueError("Missing critical Environment Variables. Check your Koyeb settings.")
-
+    logging.info("Starting Telegram Bot listener on Koyeb...")
     app = ApplicationBuilder().token(TELEGRAM_BOT_TOKEN).build()
     
-    # Filter messages coming ONLY from your targeted Telegram Channel
     channel_filter = filters.Chat(chat_id=CHANNEL_ID) & filters.UpdateType.CHANNEL_POST
     app.add_handler(MessageHandler(channel_filter, handle_channel_post))
     
-    logging.info("Starting Koyeb Bot listener...")
     app.run_polling()
+    
