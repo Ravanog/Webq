@@ -449,16 +449,16 @@
       margin-top: 14px;
     }
 
-    /* --- MODALS & OVERLAYS --- */
+    /* --- UPDATED SLEEK MOVIE MODAL DESIGN --- */
     .movie-modal {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.85);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      background: rgba(5, 9, 20, 0.88);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
       visibility: hidden;
       opacity: 0;
-      transition: all 0.3s ease;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
       display: flex;
       align-items: flex-end;
       justify-content: center;
@@ -473,46 +473,33 @@
     .modal-card {
       width: 100%;
       max-width: 480px;
-      max-height: 88vh;
+      max-height: 85vh;
       background: var(--modal-bg);
       color: var(--text-main);
-      border-top-left-radius: var(--radius-lg);
-      border-top-right-radius: var(--radius-lg);
-      border-top: 1px solid var(--card-border);
+      border-top-left-radius: 28px;
+      border-top-right-radius: 28px;
+      border: 1px solid var(--card-border);
       overflow-y: auto;
       position: relative;
       transform: translateY(100%);
       transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-      padding-bottom: 24px;
+      padding: 24px 20px 30px;
+      box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.8);
     }
 
     .movie-modal.show .modal-card {
       transform: translateY(0);
     }
 
-    .modal-header-art {
-      position: relative;
-      width: 100%;
-      height: 220px;
-      background: #000;
-    }
-
-    .modal-poster {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      opacity: 0.85;
-    }
-
     .close-modal {
       position: absolute;
-      top: 12px;
-      right: 12px;
+      top: 18px;
+      right: 18px;
       z-index: 10;
-      background: rgba(0,0,0,0.6);
-      backdrop-filter: blur(4px);
-      width: 34px;
-      height: 34px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(8px);
+      width: 32px;
+      height: 32px;
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -520,76 +507,134 @@
       cursor: pointer;
       color: #fff;
       font-size: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      transition: background 0.2s;
     }
 
-    .modal-info {
-      padding: 16px 20px;
+    .close-modal:active {
+      background: rgba(255, 255, 255, 0.25);
     }
 
-    .modal-info h2 {
-      font-size: 1.35rem;
-      font-weight: 800;
-    }
-
-    .meta {
+    /* Modal Hero Header Layout */
+    .modal-hero {
       display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      margin-bottom: 18px;
+    }
+
+    .modal-poster-card {
+      width: 100px;
+      height: 145px;
+      flex-shrink: 0;
+      border-radius: 14px;
+      object-fit: cover;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+      border: 1px solid var(--card-border);
+    }
+
+    .modal-header-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-top: 4px;
+    }
+
+    .modal-header-info h2 {
+      font-size: 1.3rem;
+      font-weight: 800;
+      line-height: 1.25;
+      margin-bottom: 8px;
+      color: var(--text-main);
+    }
+
+    .modal-badges {
+      display: flex;
+      flex-wrap: wrap;
       align-items: center;
-      gap: 12px;
-      margin: 8px 0;
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      font-weight: 600;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+
+    .badge-tag {
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--text-main);
+    }
+
+    .badge-rating-gold {
+      background: rgba(245, 158, 11, 0.15);
+      border-color: rgba(245, 158, 11, 0.3);
+      color: #fbbf24;
     }
 
     .genres {
       display: flex;
       flex-wrap: wrap;
       gap: 6px;
-      margin: 10px 0;
+      margin-top: 4px;
     }
 
     .genres span {
-      background: var(--bg-card);
-      border: 1px solid var(--card-border);
-      padding: 4px 10px;
+      background: rgba(0, 242, 254, 0.08);
+      border: 1px solid rgba(0, 242, 254, 0.2);
+      color: var(--accent-color);
+      padding: 2px 8px;
       border-radius: var(--radius-full);
-      font-size: 0.72rem;
+      font-size: 0.68rem;
       font-weight: 600;
     }
 
     .plot-text {
-      font-size: 0.85rem;
-      line-height: 1.5;
+      font-size: 0.88rem;
+      line-height: 1.55;
       color: var(--text-muted);
-      margin: 10px 0;
+      margin-bottom: 22px;
     }
 
+    /* Modal Buttons */
     .action-btn-group {
       display: flex;
       flex-direction: column;
-      gap: 10px;
-      padding: 0 20px;
+      gap: 12px;
     }
 
     .btn-action {
       width: 100%;
-      padding: 13px;
-      border-radius: var(--radius-full);
+      padding: 14px;
+      border-radius: 14px;
       border: none;
       font-weight: 700;
-      font-size: 0.88rem;
+      font-size: 0.9rem;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
       color: #0b1120;
-      box-shadow: var(--card-shadow);
+      transition: transform 0.2s ease, opacity 0.2s ease;
       text-decoration: none;
     }
 
-    .btn-stream { background: var(--accent-gradient); }
-    .btn-telegram { background: var(--accent-tg); color: #fff; }
+    .btn-action:active {
+      transform: scale(0.98);
+    }
+
+    .btn-stream {
+      background: var(--accent-gradient);
+      box-shadow: 0 4px 18px rgba(0, 242, 254, 0.3);
+    }
+
+    .btn-telegram {
+      background: var(--accent-tg);
+      color: #ffffff;
+      box-shadow: 0 4px 18px rgba(0, 136, 204, 0.3);
+    }
 
     /* --- BOTTOM NAVIGATION BAR --- */
     .bottomnav {
@@ -725,23 +770,29 @@
   <!-- DETAIL MODAL -->
   <div id="movieModal" class="movie-modal">
     <div class="modal-card">
-      <div class="modal-header-art">
-        <img id="modalPoster" class="modal-poster" src="" alt="Poster">
-        <div class="close-modal" id="closeModalBtn"><i class="ri-close-line"></i></div>
-      </div>
-      <div class="modal-info">
-        <h2 id="modalTitle">Movie Title</h2>
-        <div class="meta">
-          <span id="modalYearText"></span>
-          <span>•</span>
-          <span id="modalAge">U/A</span>
-          <span>•</span>
-          <span>⭐ <b id="modalRating" style="color:var(--text-main);">8.5</b></span>
-        </div>
-        <div class="genres" id="modalGenres"></div>
-        <p id="modalPlot" class="plot-text"></p>
-      </div>
+      <div class="close-modal" id="closeModalBtn"><i class="ri-close-line"></i></div>
       
+      <!-- Top Hero Section: Poster + Title Info -->
+      <div class="modal-hero">
+        <img id="modalPoster" class="modal-poster-card" src="" alt="Poster">
+        <div class="modal-header-info">
+          <h2 id="modalTitle">Movie Title</h2>
+          
+          <div class="modal-badges">
+            <span id="modalRating" class="badge-tag badge-rating-gold"><i class="ri-star-fill"></i> 8.5</span>
+            <span id="modalYearText" class="badge-tag">2010</span>
+            <span id="modalAge" class="badge-tag">U/A</span>
+            <span id="modalQuality" class="badge-tag">HD</span>
+          </div>
+
+          <div class="genres" id="modalGenres"></div>
+        </div>
+      </div>
+
+      <!-- Synopsis -->
+      <p id="modalPlot" class="plot-text"></p>
+      
+      <!-- Action Buttons -->
       <div class="action-btn-group">
         <button id="streamBtn" class="btn-action btn-stream"><i class="ri-play-circle-fill"></i> Stream Online</button>
         <button id="telegramBtn" class="btn-action btn-telegram"><i class="ri-telegram-fill"></i> Get Telegram Files</button>
@@ -805,13 +856,14 @@
     function openModal(movie) {
       document.getElementById('modalTitle').innerText = movie.title;
       document.getElementById('modalPoster').src = movie.poster;
-      document.getElementById('modalRating').innerText = movie.rating || "N/A";
-      document.getElementById('modalYearText').innerText = movie.year || "";
+      document.getElementById('modalRating').innerHTML = `<i class="ri-star-fill"></i> ${movie.rating || "N/A"}`;
+      document.getElementById('modalYearText').innerText = movie.year || "N/A";
       document.getElementById('modalAge').innerText = movie.age || "U/A";
+      document.getElementById('modalQuality').innerText = movie.quality || "HD";
       document.getElementById('modalPlot').innerText = movie.plot || "No description available.";
       
       const genresContainer = document.getElementById('modalGenres');
-      genresContainer.innerHTML = movie.genres ? movie.genres.map(g => `<span>${g}</span>`).join('') : '';
+      genresContainer.innerHTML = movie.genres ? movie.genres.map(g => `<span>#${g}</span>`).join('') : '';
       
       document.getElementById('streamBtn').setAttribute('data-link', movie.streamLink || '#');
       document.getElementById('telegramBtn').setAttribute('data-link', movie.telegramLink || "#");
