@@ -3,33 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hari×Moviez | Stream Movies</title>
+  <title>Hari×Moviez</title>
   <!-- Google Fonts & Remix Icons -->
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
 
   <style>
     :root {
-      --bg-main: #070a12;
-      --bg-card: #121826;
-      --bg-glass: rgba(11, 15, 25, 0.85);
-      --text-main: #f8fafc;
+      --bg-main: #080a0f;
+      --bg-card: #121620;
+      --bg-glass: rgba(8, 10, 15, 0.85);
+      --text-main: #ffffff;
       --text-sub: #94a3b8;
-      --accent: #3b82f6;
-      --accent-gradient: linear-gradient(135deg, #4f46e5, #3b82f6);
+      --accent: #ef4444;
       --card-border: rgba(255, 255, 255, 0.08);
-      --radius-sm: 10px;
-      --radius-md: 18px;
+      --radius-md: 16px;
       --radius-lg: 24px;
-    }
-
-    body.light-mode {
-      --bg-main: #f1f5f9;
-      --bg-card: #ffffff;
-      --bg-glass: rgba(255, 255, 255, 0.85);
-      --text-main: #0f172a;
-      --text-sub: #64748b;
-      --card-border: rgba(0, 0, 0, 0.08);
     }
 
     * {
@@ -44,11 +33,10 @@
       background-color: var(--bg-main);
       color: var(--text-main);
       padding-bottom: 90px;
-      transition: background-color 0.3s ease, color 0.3s ease;
       overflow-x: hidden;
     }
 
-    /* --- NAVIGATION HEADER --- */
+    /* --- NAVIGATION BAR --- */
     .app-bar {
       position: sticky;
       top: 0;
@@ -59,7 +47,6 @@
       padding: 14px 20px;
       background: var(--bg-glass);
       backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--card-border);
     }
 
@@ -69,103 +56,23 @@
       gap: 8px;
       font-weight: 800;
       font-size: 1.25rem;
-      letter-spacing: -0.5px;
       color: #fff;
-      cursor: pointer;
     }
 
-    .brand i {
-      font-size: 1.4rem;
-      color: var(--accent);
-    }
+    .brand i { color: var(--accent); }
 
-    .nav-actions {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .icon-btn {
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      border: 1px solid var(--card-border);
-      background: rgba(255, 255, 255, 0.05);
-      color: var(--text-main);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      font-size: 1.1rem;
-      transition: 0.2s;
-    }
-
-    .icon-btn:active {
-      transform: scale(0.92);
-    }
-
-    /* --- HERO SLIDER --- */
-    .hero-wrapper {
-      position: relative;
-      margin: 16px;
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
-    }
-
-    .hero-track {
-      display: flex;
-      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .hero-slide {
-      min-width: 100%;
-      height: 230px;
-      background-size: cover;
-      background-position: center;
-      position: relative;
-      display: flex;
-      align-items: flex-end;
-      padding: 20px;
-    }
-
-    .hero-slide::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(7, 10, 18, 0.95) 15%, rgba(7, 10, 18, 0.2) 75%);
-    }
-
-    .hero-info {
-      position: relative;
-      z-index: 2;
-    }
-
-    .hero-info h1 {
-      font-size: 1.4rem;
-      font-weight: 800;
-      line-height: 1.2;
-    }
-
-    .hero-info p {
-      font-size: 0.8rem;
-      color: var(--text-sub);
-      margin: 4px 0 12px;
-    }
-
-    .btn-play {
-      background: var(--accent-gradient);
+    .tg-channel-btn {
+      background: #0088cc;
       color: #fff;
       border: none;
-      padding: 9px 20px;
-      border-radius: 30px;
+      padding: 8px 14px;
+      border-radius: 20px;
       font-weight: 700;
-      font-size: 0.85rem;
-      display: inline-flex;
+      font-size: 0.8rem;
+      display: flex;
       align-items: center;
       gap: 6px;
-      cursor: pointer;
-      box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+      text-decoration: none;
     }
 
     /* --- SECTION TITLE --- */
@@ -174,108 +81,52 @@
       justify-content: space-between;
       align-items: center;
       padding: 0 20px;
-      margin: 22px 0 12px;
+      margin: 22px 0 14px;
     }
 
     .section-title h2 {
-      font-size: 1.1rem;
+      font-size: 1.15rem;
       font-weight: 800;
       display: flex;
       align-items: center;
       gap: 8px;
     }
 
-    .section-title h2::before {
-      content: '';
-      width: 4px;
-      height: 18px;
-      background: var(--accent);
-      border-radius: 4px;
-    }
-
-    /* --- LANGUAGE HERO CHIPS --- */
-    .chip-scroll {
-      display: flex;
-      gap: 10px;
-      overflow-x: auto;
-      padding: 0 20px 8px;
-      scrollbar-width: none;
-    }
-
-    .chip-scroll::-webkit-scrollbar { display: none; }
-
-    .lang-chip {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 16px 6px 6px;
-      border-radius: 40px;
-      background: var(--bg-card);
-      border: 1px solid var(--card-border);
-      color: var(--text-main);
-      font-size: 0.85rem;
-      font-weight: 700;
-      white-space: nowrap;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-
-    .lang-chip img {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 1.5px solid rgba(255,255,255,0.2);
-    }
-
-    .lang-chip:hover, .lang-chip.active {
-      background: var(--accent-gradient);
-      border-color: transparent;
-      color: #fff;
-    }
-
-    .lang-chip:hover img, .lang-chip.active img {
-      border-color: #fff;
-    }
-
-    /* --- UNIFORM MOVIE CARDS --- */
-    .media-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(115px, 1fr));
-      gap: 14px;
-      padding: 0 20px;
-    }
-
+    /* --- HORIZONTAL SCROLL & GRID --- */
     .media-scroll {
       display: flex;
-      gap: 14px;
+      gap: 16px;
       overflow-x: auto;
       padding: 0 20px 10px;
       scrollbar-width: none;
     }
-
     .media-scroll::-webkit-scrollbar { display: none; }
 
+    .media-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 16px;
+      padding: 0 20px;
+    }
+
+    /* --- MOVIE CARD DESIGN --- */
     .poster-card {
-      flex: 0 0 115px;
-      width: 115px;
+      flex: 0 0 150px;
+      width: 100%;
       cursor: pointer;
       transition: transform 0.25s ease;
     }
 
-    .poster-card:hover {
-      transform: translateY(-5px);
-    }
+    .poster-card:hover { transform: translateY(-4px); }
 
     .poster-img-wrapper {
       position: relative;
-      width: 115px;
-      height: 165px;
+      width: 100%;
+      height: 225px; /* 2:3 Ratio Sizing */
       border-radius: var(--radius-md);
       overflow: hidden;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
-      border: 1px solid var(--card-border);
       background: var(--bg-card);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
     }
 
     .poster-card img {
@@ -284,12 +135,44 @@
       object-fit: cover;
     }
 
-    .card-meta {
-      margin-top: 8px;
+    .tag-quality {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(8px);
+      padding: 3px 6px;
+      border-radius: 4px;
+      font-size: 0.65rem;
+      font-weight: 800;
+      color: #fff;
+      text-transform: uppercase;
+      border: 1px solid rgba(255, 255, 255, 0.15);
     }
 
+    .rating-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(18, 22, 32, 0.85);
+      backdrop-filter: blur(8px);
+      padding: 4px 8px;
+      border-radius: 8px;
+      font-size: 0.75rem;
+      font-weight: 800;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .rating-badge i { color: #eab308; }
+
+    .card-meta { margin-top: 10px; }
+
     .card-meta h4 {
-      font-size: 0.82rem;
+      font-size: 0.95rem;
       font-weight: 700;
       white-space: nowrap;
       overflow: hidden;
@@ -298,103 +181,12 @@
     }
 
     .card-meta span {
-      font-size: 0.72rem;
+      font-size: 0.78rem;
       color: var(--text-sub);
       font-weight: 500;
     }
 
-    /* --- BOTTOM DOCK NAVIGATION --- */
-    .dock-nav {
-      position: fixed;
-      bottom: 16px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: calc(100% - 40px);
-      max-width: 360px;
-      height: 56px;
-      background: var(--bg-glass);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1px solid var(--card-border);
-      border-radius: 40px;
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      z-index: 1000;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-    }
-
-    .dock-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 2px;
-      color: var(--text-sub);
-      font-size: 0.7rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: 0.2s;
-    }
-
-    .dock-item i { font-size: 1.25rem; }
-
-    .dock-item.active {
-      color: var(--accent);
-    }
-
-    /* --- SEARCH OVERLAY --- */
-    .search-overlay {
-      position: fixed;
-      inset: 0;
-      background: var(--bg-main);
-      z-index: 3000;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s ease;
-      display: flex;
-      flex-direction: column;
-      padding: 20px;
-      overflow-y: auto;
-    }
-
-    .search-overlay.active {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    .search-header {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 20px;
-    }
-
-    .search-input-wrapper {
-      position: relative;
-      flex: 1;
-      display: flex;
-      align-items: center;
-    }
-
-    .search-input-wrapper i {
-      position: absolute;
-      left: 16px;
-      font-size: 1.2rem;
-      color: var(--text-sub);
-    }
-
-    .search-input-wrapper input {
-      width: 100%;
-      padding: 12px 40px 12px 48px;
-      border-radius: 40px;
-      background: var(--bg-card);
-      border: 1px solid var(--card-border);
-      color: var(--text-main);
-      font-size: 0.95rem;
-      outline: none;
-    }
-
-    /* --- MOVIE DETAIL MODAL SHEET --- */
+    /* --- BOTTOM SHEET / MODAL --- */
     .modal-overlay {
       position: fixed;
       inset: 0;
@@ -426,14 +218,12 @@
       transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    .modal-overlay.active .modal-sheet {
-      transform: translateY(0);
-    }
+    .modal-overlay.active .modal-sheet { transform: translateY(0); }
 
     .modal-header-art {
       position: relative;
       width: 100%;
-      height: 220px;
+      height: 240px;
       border-radius: var(--radius-md);
       overflow: hidden;
       margin-bottom: 16px;
@@ -458,128 +248,51 @@
       cursor: pointer;
     }
 
-    .action-btn-group {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-top: 20px;
-    }
-
-    .btn-stream {
-      background: var(--accent-gradient);
-      color: #fff;
-      border: none;
-      padding: 14px;
-      border-radius: 30px;
-      font-weight: 700;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-    }
-
     .btn-telegram {
       background: #0088cc;
       color: #fff;
-      border: none;
+      text-decoration: none;
       padding: 14px;
       border-radius: 30px;
       font-weight: 700;
-      cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
+      margin-top: 20px;
     }
   </style>
 </head>
 <body>
 
-  <!-- HEADER NAVBAR -->
+  <!-- NAVBAR -->
   <header class="app-bar">
-    <div class="brand" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+    <div class="brand">
       <i class="ri-film-fill"></i>
       <span>Hari×Moviez</span>
     </div>
-    <div class="nav-actions">
-      <button class="icon-btn" id="openSearchBtn"><i class="ri-search-line"></i></button>
-      <button class="icon-btn" id="themeBtn"><i class="ri-moon-line"></i></button>
-    </div>
+    <!-- Replace link with your Telegram Channel -->
+    <a href="https://t.me/your_channel_username" target="_blank" class="tg-channel-btn">
+      <i class="ri-telegram-fill"></i> Join Channel
+    </a>
   </header>
 
-  <!-- SEARCH OVERLAY -->
-  <div class="search-overlay" id="searchOverlay">
-    <div class="search-header">
-      <div class="search-input-wrapper">
-        <i class="ri-search-line"></i>
-        <input type="text" id="engineSearchInput" placeholder="Search movies, language..." autocomplete="off">
-      </div>
-      <button class="icon-btn" id="closeSearchBtn"><i class="ri-close-line"></i></button>
-    </div>
-
-    <div class="media-grid" id="searchResultsGrid"></div>
-    <div id="searchNoResults" style="display:none; text-align:center; padding:50px; color:var(--text-sub);">
-      <i class="ri-search-eye-line" style="font-size:3rem;"></i>
-      <p style="margin-top:8px;">No movies found.</p>
-    </div>
-  </div>
-
-  <!-- MAIN PAGE VIEW -->
-  <main id="homeView">
-    <!-- HERO CAROUSEL -->
-    <div class="hero-wrapper">
-      <div class="hero-track" id="heroTrack"></div>
-    </div>
-
-    <!-- POPULAR MOVIES -->
+  <!-- MAIN CONTAINER -->
+  <main>
+    <!-- TRENDING SECTION -->
     <div class="section-title">
-      <h2>Popular Movies</h2>
+      <h2>🔥 Trending Now</h2>
     </div>
-    <div class="media-scroll" id="popularContainer"></div>
+    <div class="media-scroll" id="trendingScroll"></div>
 
-    <!-- LANGUAGES WITH HERO PHOTOS -->
+    <!-- ALL MOVIES SECTION -->
     <div class="section-title">
-      <h2>Languages</h2>
+      <h2>🍿 Latest Uploads</h2>
     </div>
-    <div class="chip-scroll" id="languageChips">
-      <div class="lang-chip active" data-lang="all">
-        <i class="ri-global-line" style="margin-left: 6px;"></i> All
-      </div>
-      <div class="lang-chip" data-lang="hindi">
-        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100" alt="Salman Khan"> Hindi
-      </div>
-      <div class="lang-chip" data-lang="kannada">
-        <img src="https://telegra.ph/file/893adcfdbf884714908ea-d206bee02e7c4433f5.jpg" alt="Sudeep"> Kannada
-      </div>
-      <div class="lang-chip" data-lang="telugu">
-        <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=100" alt="Prabhas"> Telugu
-      </div>
-      <div class="lang-chip" data-lang="tamil">
-        <img src="https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=100" alt="Rajinikanth"> Tamil
-      </div>
-      <div class="lang-chip" data-lang="english">
-        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100" alt="English"> English
-      </div>
-      <div class="lang-chip" data-lang="malayalam">
-        <img src="https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=100" alt="Malayalam"> Malayalam
-      </div>
-    </div>
-
-    <!-- FILTERED MOVIES GRID -->
-    <div class="section-title" id="filteredTitle" style="display:none;">
-      <h2 id="filteredHeading">Movies</h2>
-    </div>
-    <div class="media-grid" id="filteredGrid" style="display:none;"></div>
+    <div class="media-grid" id="latestGrid"></div>
   </main>
 
-  <!-- BOTTOM NAVIGATION DOCK -->
-  <nav class="dock-nav">
-    <div class="dock-item active" id="dockHome"><i class="ri-home-5-fill"></i><span>Home</span></div>
-    <div class="dock-item" id="dockSearchNav"><i class="ri-search-line"></i><span>Search</span></div>
-  </nav>
-
-  <!-- MOVIE DETAILS MODAL -->
+  <!-- MOVIE DETAIL SHEET -->
   <div class="modal-overlay" id="detailModal">
     <div class="modal-sheet">
       <div class="modal-header-art">
@@ -590,170 +303,102 @@
       <p id="modalMeta" style="color:var(--text-sub); font-size:0.85rem; margin-top:4px;"></p>
       <p id="modalPlot" style="margin-top:12px; font-size:0.9rem; line-height:1.5; color:var(--text-main);"></p>
       
-      <div class="action-btn-group">
-        <button class="btn-stream" id="streamBtn"><i class="ri-play-fill"></i> Stream Online</button>
-        <button class="btn-telegram" id="telegramBtn"><i class="ri-telegram-fill"></i> Get Telegram Files</button>
-      </div>
+      <a href="#" id="modalTgLink" target="_blank" class="btn-telegram">
+        <i class="ri-telegram-fill"></i> Open in Telegram / Get File
+      </a>
     </div>
   </div>
 
   <script>
-    // FULL DATASET EMBEDDED DIRECTLY (No fetch, no extra JSON required)
-    const movieData = {
-      bannerSlides: [
-        { title: "Funky", year: "2026", type: "Romance/Comedy", poster: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=800" },
-        { title: "Landlord", year: "2026", type: "Action/Drama", poster: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=800" }
-      ],
-      popular: [
-        { title: "Landlord", year: "2026", language: "kannada", poster: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=400", rating: "8.5", quality: "4K", plot: "A high-stakes thriller centered around power dynamics." },
-        { title: "Ala Vaikunthapurramuloo", year: "2020", language: "telugu", poster: "https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?w=400", rating: "8.8", quality: "HD", plot: "A young man seeks validation from his cold father." },
-        { title: "Love Insurance Kompany", year: "2026", language: "tamil", poster: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=400", rating: "8.1", quality: "HD", plot: "A futuristic romantic comedy about securing love." },
-        { title: "Max", year: "2026", language: "kannada", poster: "https://images.unsplash.com/photo-1518173946687-a4c8a383392e?w=400", rating: "8.7", quality: "4K", plot: "An action-packed journey of justice and revenge." },
-        { title: "Sikandar", year: "2026", language: "hindi", poster: "https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=400", rating: "8.4", quality: "HD", plot: "A blockbuster action drama showcasing resilience." }
-      ]
-    };
+    /* 
+      1. Add movies here or keep this array synced with a 'movies.json' file.
+      2. Set 'tg_link' to your Telegram post/bot link for each specific movie.
+    */
+    const telegramMovies = [
+      {
+        title: "Rao Bahadur",
+        year: "2026",
+        genre: "Mystery",
+        rating: "8.7",
+        quality: "HD",
+        poster: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=400",
+        plot: "An intricate mystery uncovering long-hidden secrets.",
+        tg_link: "https://t.me/your_channel_username/101" // Telegram post link
+      },
+      {
+        title: "Deewana",
+        year: "2026",
+        genre: "Comedy",
+        rating: "9.2",
+        quality: "4K Dolby",
+        poster: "https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?w=400",
+        plot: "A romantic comedy full of fun and laughter.",
+        tg_link: "https://t.me/your_channel_username/102"
+      },
+      {
+        title: "72 Hours",
+        year: "2026",
+        genre: "Comedy",
+        rating: "7.9",
+        quality: "HD",
+        poster: "https://images.unsplash.com/photo-1518173946687-a4c8a383392e?w=400",
+        plot: "A chaotic race against time across a wild weekend.",
+        tg_link: "https://t.me/your_channel_username/103"
+      },
+      {
+        title: "Kantara A Legend",
+        year: "2025",
+        genre: "Action",
+        rating: "8.5",
+        quality: "4K",
+        poster: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=400",
+        plot: "An epic tale exploring divine roots and folklore.",
+        tg_link: "https://t.me/your_channel_username/104"
+      }
+    ];
 
-    // Render App instantly on load
-    function initApp() {
-      renderHero();
-      renderScroll('popularContainer', movieData.popular);
-    }
+    // Card Builder
+    function createCard(movie) {
+      const tag = movie.quality ? `<div class="tag-quality">${movie.quality}</div>` : '';
+      const rating = movie.rating ? `<div class="rating-badge"><i class="ri-star-fill"></i> ${movie.rating}</div>` : '';
 
-    function renderHero() {
-      const track = document.getElementById('heroTrack');
-      track.innerHTML = movieData.bannerSlides.map(slide => `
-        <div class="hero-slide" style="background-image: url('${slide.poster}')">
-          <div class="hero-info">
-            <h1>${slide.title}</h1>
-            <p>${slide.year} • ${slide.type}</p>
-            <button class="btn-play" onclick="openDetails('${slide.title}')"><i class="ri-play-fill"></i> Watch Now</button>
-          </div>
-        </div>
-      `).join('');
-    }
-
-    function renderScroll(containerId, list) {
-      const el = document.getElementById(containerId);
-      el.innerHTML = list.map(item => `
-        <div class="poster-card" onclick='triggerModal(${JSON.stringify(item).replace(/'/g, "&apos;")})'>
+      return `
+        <div class="poster-card" onclick='openModal(${JSON.stringify(movie).replace(/'/g, "&apos;")})'>
           <div class="poster-img-wrapper">
-            <img src="${item.poster}" alt="${item.title}" loading="lazy">
+            <img src="${movie.poster}" alt="${movie.title}" loading="lazy">
+            ${tag}
+            ${rating}
           </div>
           <div class="card-meta">
-            <h4>${item.title}</h4>
-            <span>${item.year}</span>
+            <h4>${movie.title}</h4>
+            <span>${movie.year} • ${movie.genre}</span>
           </div>
         </div>
-      `).join('');
+      `;
     }
 
-    // Language Filter Logic
-    document.querySelectorAll('.lang-chip').forEach(chip => {
-      chip.onclick = () => {
-        document.querySelectorAll('.lang-chip').forEach(c => c.classList.remove('active'));
-        chip.classList.add('active');
-        
-        const lang = chip.getAttribute('data-lang');
-        const filteredTitle = document.getElementById('filteredTitle');
-        const filteredGrid = document.getElementById('filteredGrid');
-        
-        if (lang === 'all') {
-          filteredTitle.style.display = 'none';
-          filteredGrid.style.display = 'none';
-          return;
-        }
+    // Render Data
+    function loadMovies() {
+      document.getElementById('trendingScroll').innerHTML = telegramMovies.map(createCard).join('');
+      document.getElementById('latestGrid').innerHTML = telegramMovies.map(createCard).join('');
+    }
 
-        const filtered = movieData.popular.filter(m => m.language === lang);
-        document.getElementById('filteredHeading').innerText = `${lang.toUpperCase()} Movies`;
-        filteredTitle.style.display = 'flex';
-        filteredGrid.style.display = 'grid';
-
-        if(filtered.length === 0) {
-          filteredGrid.innerHTML = '<p style="color:var(--text-sub); grid-column:1/-1;">No movies found for this language.</p>';
-          return;
-        }
-
-        filteredGrid.innerHTML = filtered.map(item => `
-          <div class="poster-card" onclick='triggerModal(${JSON.stringify(item).replace(/'/g, "&apos;")})'>
-            <div class="poster-img-wrapper">
-              <img src="${item.poster}" alt="${item.title}" loading="lazy">
-            </div>
-            <div class="card-meta">
-              <h4>${item.title}</h4>
-              <span>${item.year}</span>
-            </div>
-          </div>
-        `).join('');
-      };
-    });
-
-    // Details Modal
-    function triggerModal(item) {
-      document.getElementById('modalImg').src = item.poster;
-      document.getElementById('modalTitle').innerText = item.title;
-      document.getElementById('modalMeta').innerText = `${item.year || ''} • ${item.quality || 'HD'} • ⭐ ${item.rating || 'N/A'}`;
-      document.getElementById('modalPlot').innerText = item.plot || 'No plot overview available.';
+    // Modal Control
+    function openModal(movie) {
+      document.getElementById('modalImg').src = movie.poster;
+      document.getElementById('modalTitle').innerText = movie.title;
+      document.getElementById('modalMeta').innerText = `${movie.year} • ${movie.genre} • ⭐ ${movie.rating || 'N/A'}`;
+      document.getElementById('modalPlot').innerText = movie.plot || 'Tap below to fetch files on Telegram.';
+      document.getElementById('modalTgLink').href = movie.tg_link;
+      
       document.getElementById('detailModal').classList.add('active');
     }
 
-    function openDetails(title) {
-      const match = movieData.popular.find(m => m.title === title);
-      if (match) triggerModal(match);
-    }
-
-    document.getElementById('closeModal').onclick = () => document.getElementById('detailModal').classList.remove('active');
-
-    // Theme Switch
-    const themeBtn = document.getElementById('themeBtn');
-    themeBtn.onclick = () => {
-      document.body.classList.toggle('light-mode');
-      const isLight = document.body.classList.contains('light-mode');
-      themeBtn.innerHTML = isLight ? '<i class="ri-sun-line"></i>' : '<i class="ri-moon-line"></i>';
+    document.getElementById('closeModal').onclick = () => {
+      document.getElementById('detailModal').classList.remove('active');
     };
 
-    // Search Engine
-    const searchOverlay = document.getElementById('searchOverlay');
-    const openSearchBtn = document.getElementById('openSearchBtn');
-    const closeSearchBtn = document.getElementById('closeSearchBtn');
-    const dockSearchNav = document.getElementById('dockSearchNav');
-    const engineSearchInput = document.getElementById('engineSearchInput');
-
-    function openSearch() {
-      searchOverlay.classList.add('active');
-      engineSearchInput.focus();
-    }
-
-    openSearchBtn.onclick = openSearch;
-    dockSearchNav.onclick = openSearch;
-    closeSearchBtn.onclick = () => searchOverlay.classList.remove('active');
-
-    engineSearchInput.oninput = (e) => {
-      const q = e.target.value.toLowerCase().trim();
-      const grid = document.getElementById('searchResultsGrid');
-      const noRes = document.getElementById('searchNoResults');
-
-      if(!q) { grid.innerHTML = ''; noRes.style.display = 'none'; return; }
-
-      const matches = movieData.popular.filter(m => m.title.toLowerCase().includes(q) || m.language.toLowerCase().includes(q));
-      
-      if(!matches.length) { grid.innerHTML = ''; noRes.style.display = 'block'; return; }
-
-      noRes.style.display = 'none';
-      grid.innerHTML = matches.map(item => `
-        <div class="poster-card" onclick='triggerModal(${JSON.stringify(item).replace(/'/g, "&apos;")})'>
-          <div class="poster-img-wrapper">
-            <img src="${item.poster}" alt="${item.title}" loading="lazy">
-          </div>
-          <div class="card-meta">
-            <h4>${item.title}</h4>
-            <span>${item.year}</span>
-          </div>
-        </div>
-      `).join('');
-    };
-
-    // Start App
-    initApp();
+    loadMovies();
   </script>
 </body>
 </html>
