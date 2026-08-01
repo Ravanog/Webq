@@ -3,48 +3,49 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>Hari×Moviez | Streaming & Telegram</title>
+  <title>Hari×Moviez | Streaming Hub</title>
   
   <!-- Fonts & Icons -->
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
 
   <style>
-    /* CSS VARIABLES & THEMING Engine */
+    /* CSS VARIABLES & CYAN / OCEAN THEMING ENGINE */
     :root {
-      --bg-main: #f8fafc;
-      --bg-card: #ffffff;
-      --bg-glass: rgba(255, 255, 255, 0.85);
-      --bg-glass-card: rgba(255, 255, 255, 0.6);
-      --text-main: #0f172a;
-      --text-muted: #64748b;
-      --accent-gradient: linear-gradient(135deg, #2563eb, #0284c7);
-      --accent-gradient-alt: linear-gradient(135deg, #ff416c, #ff4b2b);
+      --bg-main: #0b1120;
+      --bg-card: #151e32;
+      --bg-glass: rgba(11, 17, 32, 0.85);
+      --bg-glass-card: rgba(21, 30, 50, 0.65);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --accent-color: #00f2fe;
+      --accent-gradient: linear-gradient(135deg, #00f2fe, #4facfe);
+      --accent-gradient-alt: linear-gradient(135deg, #38ef7d, #11998e);
       --accent-tg: linear-gradient(135deg, #0088cc, #0055a4);
-      --card-border: rgba(226, 232, 240, 0.8);
-      --card-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.08);
-      --nav-bg: rgba(255, 255, 255, 0.85);
-      --badge-bg: rgba(15, 23, 42, 0.75);
-      --modal-bg: #ffffff;
+      --card-border: rgba(255, 255, 255, 0.08);
+      --card-shadow: 0 12px 30px -5px rgba(0, 0, 0, 0.6);
+      --nav-bg: rgba(21, 30, 50, 0.85);
+      --badge-bg: rgba(11, 17, 32, 0.85);
+      --modal-bg: #0f172a;
       --radius-sm: 8px;
       --radius-md: 16px;
       --radius-lg: 24px;
       --radius-full: 9999px;
     }
 
-    body.dark-mode {
-      --bg-main: #0b0f19;
-      --bg-card: #151c2c;
-      --bg-glass: rgba(11, 15, 25, 0.85);
-      --bg-glass-card: rgba(21, 28, 44, 0.6);
-      --text-main: #f8fafc;
-      --text-muted: #94a3b8;
-      --accent-gradient: linear-gradient(135deg, #3b82f6, #06b6d4);
-      --card-border: rgba(255, 255, 255, 0.08);
-      --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
-      --nav-bg: rgba(21, 28, 44, 0.85);
-      --badge-bg: rgba(0, 0, 0, 0.8);
-      --modal-bg: #111827;
+    body.light-mode {
+      --bg-main: #f0f4f8;
+      --bg-card: #ffffff;
+      --bg-glass: rgba(240, 244, 248, 0.88);
+      --bg-glass-card: rgba(255, 255, 255, 0.7);
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --accent-gradient: linear-gradient(135deg, #0284c7, #0369a1);
+      --card-border: rgba(0, 0, 0, 0.08);
+      --card-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.08);
+      --nav-bg: rgba(255, 255, 255, 0.88);
+      --badge-bg: rgba(15, 23, 42, 0.75);
+      --modal-bg: #ffffff;
     }
 
     * {
@@ -71,7 +72,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 12px 20px;
+      padding: 14px 20px;
       background: var(--bg-glass);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
@@ -86,20 +87,20 @@
     }
 
     .brand-icon {
-      width: 38px;
-      height: 38px;
+      width: 40px;
+      height: 40px;
       background: var(--accent-gradient);
       border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #fff;
-      font-size: 20px;
-      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+      color: #0b1120;
+      font-size: 22px;
+      box-shadow: 0 4px 15px rgba(0, 242, 254, 0.3);
     }
 
     .logo-text {
-      font-size: 1.15rem;
+      font-size: 1.2rem;
       font-weight: 800;
       letter-spacing: -0.5px;
       background: var(--accent-gradient);
@@ -111,37 +112,6 @@
       display: flex;
       align-items: center;
       gap: 10px;
-    }
-
-    .search-box {
-      position: relative;
-      display: flex;
-      align-items: center;
-    }
-
-    .search-box i {
-      position: absolute;
-      left: 12px;
-      color: var(--text-muted);
-      font-size: 16px;
-    }
-
-    #searchInput {
-      padding: 9px 16px 9px 36px;
-      border-radius: var(--radius-full);
-      border: 1px solid var(--card-border);
-      background: var(--bg-card);
-      color: var(--text-main);
-      font-size: 0.85rem;
-      width: 140px;
-      transition: all 0.3s ease;
-    }
-
-    #searchInput:focus {
-      outline: none;
-      width: 180px;
-      border-color: #3b82f6;
-      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
     }
 
     .icon-btn {
@@ -163,11 +133,74 @@
       transform: scale(0.92);
     }
 
+    /* --- CLEAN NORMAL SEARCH BAR --- */
+    .search-hub {
+      padding: 16px 20px 8px;
+    }
+
+    .search-bar-container {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .search-input-wrapper {
+      position: relative;
+      flex: 1;
+      display: flex;
+      align-items: center;
+    }
+
+    .search-input-wrapper i {
+      position: absolute;
+      left: 16px;
+      color: var(--text-muted);
+      font-size: 18px;
+    }
+
+    #searchInput {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      border-radius: var(--radius-full);
+      border: 1px solid var(--card-border);
+      background: var(--bg-card);
+      color: var(--text-main);
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+      box-shadow: var(--card-shadow);
+    }
+
+    #searchInput:focus {
+      outline: none;
+      border-color: var(--accent-color);
+      box-shadow: 0 0 0 3px rgba(0, 242, 254, 0.2);
+    }
+
+    .search-btn {
+      padding: 12px 20px;
+      border-radius: var(--radius-full);
+      border: none;
+      background: var(--accent-gradient);
+      color: #0b1120;
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 4px 12px rgba(0, 242, 254, 0.25);
+      transition: transform 0.2s ease;
+    }
+
+    .search-btn:active {
+      transform: scale(0.95);
+    }
+
     /* --- HERO SLIDER BANNER --- */
     .banner-container {
       position: relative;
       width: calc(100% - 32px);
-      margin: 16px 16px 0;
+      margin: 12px 16px 0;
       border-radius: var(--radius-lg);
       overflow: hidden;
       box-shadow: var(--card-shadow);
@@ -180,7 +213,7 @@
 
     .banner-item {
       min-width: 100%;
-      height: 210px;
+      height: 220px;
       background-size: cover;
       background-position: center;
       position: relative;
@@ -193,7 +226,7 @@
       content: "";
       position: absolute;
       inset: 0;
-      background: linear-gradient(180deg, rgba(0,0,0,0) 20%, rgba(0,0,0,0.85) 100%);
+      background: linear-gradient(180deg, rgba(0,0,0,0) 10%, rgba(11,17,32,0.92) 100%);
     }
 
     .banner-content {
@@ -203,15 +236,15 @@
     }
 
     .banner-content h1 {
-      font-size: 1.3rem;
+      font-size: 1.35rem;
       font-weight: 800;
       margin-bottom: 4px;
     }
 
     .banner-content p {
       font-size: 0.8rem;
-      opacity: 0.85;
-      margin-bottom: 10px;
+      color: var(--text-muted);
+      margin-bottom: 12px;
     }
 
     .banner-watch-btn {
@@ -219,11 +252,11 @@
       border-radius: var(--radius-full);
       border: none;
       background: var(--accent-gradient);
-      color: #fff;
+      color: #0b1120;
       font-weight: 700;
       font-size: 0.8rem;
       cursor: pointer;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      box-shadow: 0 4px 15px rgba(0, 242, 254, 0.3);
       display: inline-flex;
       align-items: center;
       gap: 6px;
@@ -249,35 +282,15 @@
     .banner-dot.active {
       width: 18px;
       border-radius: 10px;
-      background: #3b82f6;
+      background: var(--accent-color);
     }
-
-    .arrow {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 32px;
-      height: 32px;
-      background: rgba(0,0,0,0.4);
-      backdrop-filter: blur(4px);
-      color: #fff;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      z-index: 3;
-    }
-
-    .arrow-left { left: 10px; }
-    .arrow-right { right: 10px; }
 
     /* --- SECTION HEADERS --- */
     .section-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 24px 20px 12px;
+      padding: 20px 20px 10px;
     }
 
     .section-header h2 {
@@ -300,7 +313,7 @@
       font-size: 0.75rem;
       padding: 5px 12px;
       border-radius: var(--radius-full);
-      color: #fff;
+      color: #0b1120;
       font-weight: 700;
       border: none;
       cursor: pointer;
@@ -318,20 +331,20 @@
 
     .movies::-webkit-scrollbar { display: none; }
 
-    .card, .upcoming-card {
-      flex: 0 0 120px;
+    .card {
+      flex: 0 0 125px;
       cursor: pointer;
       transition: transform 0.25s ease;
     }
 
-    .card:hover, .upcoming-card:hover {
+    .card:hover {
       transform: translateY(-4px);
     }
 
     .poster-wrapper {
       position: relative;
-      width: 120px;
-      height: 175px;
+      width: 125px;
+      height: 180px;
       border-radius: var(--radius-md);
       overflow: hidden;
       box-shadow: var(--card-shadow);
@@ -419,14 +432,14 @@
 
     .lang-btn:hover {
       background: var(--accent-gradient);
-      color: #fff;
+      color: #0b1120;
       border-color: transparent;
     }
 
     /* --- SEARCH RESULTS CONTAINER --- */
     #searchResultsContainer {
       display: none;
-      padding: 20px;
+      padding: 10px 20px 20px;
     }
 
     .search-results-grid {
@@ -440,7 +453,7 @@
     .movie-modal {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.8);
+      background: rgba(0, 0, 0, 0.85);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       visibility: hidden;
@@ -470,7 +483,7 @@
       position: relative;
       transform: translateY(100%);
       transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-      padding-bottom: 20px;
+      padding-bottom: 24px;
     }
 
     .movie-modal.show .modal-card {
@@ -480,7 +493,7 @@
     .modal-header-art {
       position: relative;
       width: 100%;
-      height: 200px;
+      height: 220px;
       background: #000;
     }
 
@@ -488,7 +501,7 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      opacity: 0.8;
+      opacity: 0.85;
     }
 
     .close-modal {
@@ -498,8 +511,8 @@
       z-index: 10;
       background: rgba(0,0,0,0.6);
       backdrop-filter: blur(4px);
-      width: 32px;
-      height: 32px;
+      width: 34px;
+      height: 34px;
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -514,7 +527,7 @@
     }
 
     .modal-info h2 {
-      font-size: 1.3rem;
+      font-size: 1.35rem;
       font-weight: 800;
     }
 
@@ -570,13 +583,13 @@
       align-items: center;
       justify-content: center;
       gap: 8px;
-      color: #fff;
+      color: #0b1120;
       box-shadow: var(--card-shadow);
       text-decoration: none;
     }
 
-    .btn-stream { background: var(--accent-gradient-alt); }
-    .btn-telegram { background: var(--accent-tg); }
+    .btn-stream { background: var(--accent-gradient); }
+    .btn-telegram { background: var(--accent-tg); color: #fff; }
 
     /* --- BOTTOM NAVIGATION BAR --- */
     .bottomnav {
@@ -595,7 +608,7 @@
       height: 60px;
       border-radius: var(--radius-full);
       border: 1px solid var(--card-border);
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
       z-index: 1000;
     }
 
@@ -612,7 +625,7 @@
     }
 
     .menu.active-bar {
-      color: #3b82f6;
+      color: var(--accent-color);
     }
 
     /* --- TOAST MESSAGES --- */
@@ -622,13 +635,13 @@
       left: 50%;
       transform: translateX(-50%);
       background: var(--accent-gradient);
-      color: white;
+      color: #0b1120;
       padding: 10px 20px;
       border-radius: var(--radius-full);
       font-weight: 700;
       font-size: 0.8rem;
       z-index: 10000;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
       animation: fadeIn 0.3s ease, fadeOut 0.3s ease 1.7s forwards;
     }
 
@@ -645,13 +658,22 @@
       <div class="logo-text">ʜᴀʀɪ×ᴍᴏᴠɪᴇᴢ</div>
     </a>
     <div class="header-right">
-      <div class="search-box">
-        <i class="ri-search-line"></i>
-        <input type="text" id="searchInput" placeholder="Search...">
-      </div>
-      <button class="icon-btn" id="themeToggle"><i class="ri-moon-line"></i></button>
+      <button class="icon-btn" id="themeToggle"><i class="ri-sun-line"></i></button>
     </div>
   </header>
+
+  <!-- SEARCH HUB -->
+  <div class="search-hub">
+    <div class="search-bar-container">
+      <div class="search-input-wrapper">
+        <i class="ri-search-line"></i>
+        <input type="text" id="searchInput" placeholder="Search movies or genres...">
+      </div>
+      <button class="search-btn" id="searchBtn">
+        <i class="ri-search-line"></i> Search
+      </button>
+    </div>
+  </div>
 
   <!-- HOME PAGE CONTENT CONTAINER -->
   <div id="homepageContent">
@@ -660,8 +682,6 @@
     <div class="banner-container">
       <div class="banner-slide" id="bannerSlide"></div>
       <div class="banner-dots" id="bannerDots"></div>
-      <div class="arrow arrow-left" id="arrowLeft"><i class="ri-arrow-left-s-line"></i></div>
-      <div class="arrow arrow-right" id="arrowRight"><i class="ri-arrow-right-s-line"></i></div>
     </div>
 
     <!-- POPULAR MOVIES -->
@@ -683,26 +703,12 @@
       <button class="lang-btn" data-lang="malayalam">Malayalam</button>
       <button class="lang-btn" data-lang="kannada">Kannada</button>
     </div>
-
-    <!-- UPCOMING MOVIES -->
-    <div class="section-header">
-      <h2>Upcoming Releases</h2>
-      <button class="more-btn" data-target="upcomingMovies">+ More</button>
-    </div>
-    <div class="movies" id="upcomingMovies"></div>
-
-    <!-- POPULAR WEB SERIES -->
-    <div class="section-header">
-      <h2>Popular Web Series</h2>
-      <button class="more-btn" data-target="webSeries">+ More</button>
-    </div>
-    <div class="movies" id="webSeries"></div>
   </div>
 
   <!-- SEARCH RESULTS VIEW -->
   <div id="searchResultsContainer">
     <div class="section-header" style="padding:0;">
-      <h2>Search Results</h2>
+      <h2 id="searchResultsTitle">Search Results</h2>
     </div>
     <div id="searchResultsGrid" class="search-results-grid"></div>
   </div>
@@ -752,7 +758,7 @@
 
   <!-- JAVASCRIPT APP LOGIC -->
   <script>
-    let movieData = { popular: [], upcoming: [], webSeries: [], bannerSlides: [] };
+    let movieData = { popular: [], bannerSlides: [] };
 
     // Fetch JSON Database
     async function loadMovies() {
@@ -763,14 +769,12 @@
         renderAll();
         initBanner();
       } catch (error) {
-        console.warn('Falling back or JSON missing, loading structure...');
+        console.warn('Fallback JSON missing.');
       }
     }
 
     function renderAll() {
       renderSection('popularMovies', movieData.popular);
-      renderSection('upcomingMovies', movieData.upcoming);
-      renderSection('webSeries', movieData.webSeries);
     }
 
     function renderSection(containerId, items) {
@@ -842,7 +846,7 @@
           </div>
         `;
         div.querySelector('.banner-watch-btn').addEventListener('click', () => {
-          const found = [...movieData.popular, ...movieData.upcoming, ...movieData.webSeries].find(m => m.title === slide.title);
+          const found = (movieData.popular || []).find(m => m.title === slide.title);
           openModal(found || slide);
         });
         container.appendChild(div);
@@ -864,52 +868,56 @@
         updateDots();
       }
 
-      document.getElementById('arrowLeft')?.addEventListener('click', () => goToSlide(currentIndex - 1));
-      document.getElementById('arrowRight')?.addEventListener('click', () => goToSlide(currentIndex + 1));
-      
       clearInterval(autoInterval);
       autoInterval = setInterval(() => goToSlide(currentIndex + 1), 4000);
     }
 
-    // Search Feature
+    // MOVIE SEARCH SYSTEM
     function initSearch() {
       const input = document.getElementById('searchInput');
+      const searchBtn = document.getElementById('searchBtn');
       const homepage = document.getElementById('homepageContent');
       const searchContainer = document.getElementById('searchResultsContainer');
       const searchGrid = document.getElementById('searchResultsGrid');
 
-      input.addEventListener('input', function() {
-        const query = this.value.toLowerCase().trim();
+      function performSearch() {
+        const query = input.value.toLowerCase().trim();
         if(!query) {
           homepage.style.display = 'block';
           searchContainer.style.display = 'none';
           return;
         }
+
         homepage.style.display = 'none';
         searchContainer.style.display = 'block';
-
-        const all = [...movieData.popular, ...movieData.upcoming, ...movieData.webSeries];
-        const matches = all.filter(m => m.title.toLowerCase().includes(query));
-        
         searchGrid.innerHTML = '';
-        if(matches.length === 0) {
-          searchGrid.innerHTML = '<div style="color:var(--text-muted); grid-column: 1/-1;">No matching title found.</div>';
-          return;
-        }
 
-        matches.forEach(m => {
-          const card = document.createElement('div');
-          card.className = 'card';
-          card.innerHTML = `
-            <div class="poster-wrapper">
-              <img src="${m.poster}">
-            </div>
-            <div class="title">${m.title}</div>
-          `;
-          card.addEventListener('click', () => openModal(m));
-          searchGrid.appendChild(card);
-        });
-      });
+        const all = movieData.popular || [];
+        const matches = all.filter(m => 
+          m.title.toLowerCase().includes(query) || 
+          (m.genres && m.genres.some(g => g.toLowerCase().includes(query)))
+        );
+
+        if(matches.length === 0) {
+          searchGrid.innerHTML = '<div style="color:var(--text-muted); grid-column: 1/-1;">No movies matching your search found.</div>';
+        } else {
+          matches.forEach(m => {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.innerHTML = `
+              <div class="poster-wrapper">
+                <img src="${m.poster}">
+              </div>
+              <div class="title">${m.title}</div>
+            `;
+            card.addEventListener('click', () => openModal(m));
+            searchGrid.appendChild(card);
+          });
+        }
+      }
+
+      searchBtn.addEventListener('click', performSearch);
+      input.addEventListener('input', performSearch);
     }
 
     // Language Modal Filter
@@ -919,7 +927,7 @@
           const lang = btn.getAttribute('data-lang');
           document.getElementById('langModalTitle').innerText = `${btn.innerText} Movies`;
           
-          const all = [...movieData.popular, ...movieData.upcoming, ...movieData.webSeries];
+          const all = movieData.popular || [];
           const filtered = all.filter(m => {
             if(!m.language) return false;
             const langs = Array.isArray(m.language) ? m.language : [m.language];
@@ -955,18 +963,11 @@
     function initTheme() {
       const toggleBtn = document.getElementById('themeToggle');
       const icon = toggleBtn.querySelector('i');
-      
-      const savedTheme = localStorage.getItem('theme');
-      if(savedTheme === 'dark') {
-        document.body.classList.add('dark-mode');
-        icon.className = 'ri-sun-line';
-      }
 
       toggleBtn.addEventListener('click', () => {
-        document.body.classList.toggle('dark-mode');
-        const isDark = document.body.classList.contains('dark-mode');
-        icon.className = isDark ? 'ri-sun-line' : 'ri-moon-line';
-        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        document.body.classList.toggle('light-mode');
+        const isLight = document.body.classList.contains('light-mode');
+        icon.className = isLight ? 'ri-moon-line' : 'ri-sun-line';
       });
     }
 
