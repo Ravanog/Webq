@@ -14,7 +14,7 @@ logging.basicConfig(
 # Load Environment Variables (Passed by Koyeb)
 TELEGRAM_BOT_TOKEN = os.getenv("8675260165:AAHaMWq6b5-nVy_42Szt_FQqT04kwZifPMM")
 CHANNEL_ID = int(os.getenv("CHANNEL_ID", "-1003224239956"))
-GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
+GITHUB_TOKEN = os.getenv("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")
 REPO_NAME = os.getenv("Ravanog/Webq")  # e.g., "username/moviez-app"
 JSON_FILE_PATH = os.getenv("JSON_FILE_PATH", "movies.json")
 
