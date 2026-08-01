@@ -8,7 +8,7 @@ from github import Github
 TELEGRAM_BOT_TOKEN = "8675260165:AAHaMWq6b5-nVy_42Szt_FQqT04kwZifPMM"
 CHANNEL_ID = -1003224239956  # Replace with your Telegram Channel ID (include the -100 prefix)
 
-GITHUB_TOKEN = "YOUR_GITHUB_PERSONAL_ACCESS_TOKEN"
+GITHUB_TOKEN = "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"
 REPO_NAME = "Ravanog/Webq"  # e.g., "hari/moviez-site"
 JSON_FILE_PATH = "movies.json" # Path to movies.json in repo
 
