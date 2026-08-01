@@ -267,7 +267,6 @@
       transform: translateY(-5px);
     }
 
-    /* Fixed dimensions for perfectly matching card sizes */
     .poster-img-wrapper {
       position: relative;
       width: 115px;
@@ -343,7 +342,7 @@
       color: var(--accent);
     }
 
-    /* --- FULLSCREEN SEARCH ENGINE OVERLAY --- */
+    /* --- SEARCH OVERLAY --- */
     .search-overlay {
       position: fixed;
       inset: 0;
@@ -393,17 +392,6 @@
       color: var(--text-main);
       font-size: 0.95rem;
       outline: none;
-    }
-
-    .clear-search-btn {
-      position: absolute;
-      right: 14px;
-      background: none;
-      border: none;
-      color: var(--text-sub);
-      font-size: 1.2rem;
-      cursor: pointer;
-      display: none;
     }
 
     /* --- MOVIE DETAIL MODAL SHEET --- */
@@ -526,7 +514,6 @@
       <div class="search-input-wrapper">
         <i class="ri-search-line"></i>
         <input type="text" id="engineSearchInput" placeholder="Search movies, language..." autocomplete="off">
-        <button class="clear-search-btn" id="clearSearchBtn"><i class="ri-close-circle-fill"></i></button>
       </div>
       <button class="icon-btn" id="closeSearchBtn"><i class="ri-close-line"></i></button>
     </div>
@@ -560,16 +547,16 @@
         <i class="ri-global-line" style="margin-left: 6px;"></i> All
       </div>
       <div class="lang-chip" data-lang="hindi">
-        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100" alt="Hindi"> Hindi
+        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100" alt="Salman Khan"> Hindi
       </div>
       <div class="lang-chip" data-lang="kannada">
-        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100" alt="Kannada"> Kannada
+        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100" alt="Sudeep"> Kannada
       </div>
       <div class="lang-chip" data-lang="telugu">
-        <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=100" alt="Telugu"> Telugu
+        <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=100" alt="Prabhas"> Telugu
       </div>
       <div class="lang-chip" data-lang="tamil">
-        <img src="https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=100" alt="Tamil"> Tamil
+        <img src="https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=100" alt="Rajinikanth"> Tamil
       </div>
       <div class="lang-chip" data-lang="english">
         <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100" alt="English"> English
@@ -579,7 +566,7 @@
       </div>
     </div>
 
-    <!-- FILTERED MOVIES LIST GRID -->
+    <!-- FILTERED MOVIES GRID -->
     <div class="section-title" id="filteredTitle" style="display:none;">
       <h2 id="filteredHeading">Movies</h2>
     </div>
@@ -611,7 +598,7 @@
   </div>
 
   <script>
-    // Embedded dataset to ensure instant load without CORS errors
+    // FULL DATASET EMBEDDED DIRECTLY (No fetch, no extra JSON required)
     const movieData = {
       bannerSlides: [
         { title: "Funky", year: "2026", type: "Romance/Comedy", poster: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=800" },
@@ -626,6 +613,7 @@
       ]
     };
 
+    // Render App instantly on load
     function initApp() {
       renderHero();
       renderScroll('popularContainer', movieData.popular);
@@ -659,7 +647,7 @@
       `).join('');
     }
 
-    // Language Filtering Logic
+    // Language Filter Logic
     document.querySelectorAll('.lang-chip').forEach(chip => {
       chip.onclick = () => {
         document.querySelectorAll('.lang-chip').forEach(c => c.classList.remove('active'));
@@ -699,7 +687,7 @@
       };
     });
 
-    // Modal Sheet Trigger
+    // Details Modal
     function triggerModal(item) {
       document.getElementById('modalImg').src = item.poster;
       document.getElementById('modalTitle').innerText = item.title;
@@ -715,7 +703,7 @@
 
     document.getElementById('closeModal').onclick = () => document.getElementById('detailModal').classList.remove('active');
 
-    // Theme Switcher
+    // Theme Switch
     const themeBtn = document.getElementById('themeBtn');
     themeBtn.onclick = () => {
       document.body.classList.toggle('light-mode');
@@ -723,7 +711,7 @@
       themeBtn.innerHTML = isLight ? '<i class="ri-sun-line"></i>' : '<i class="ri-moon-line"></i>';
     };
 
-    // Search Mechanics
+    // Search Engine
     const searchOverlay = document.getElementById('searchOverlay');
     const openSearchBtn = document.getElementById('openSearchBtn');
     const closeSearchBtn = document.getElementById('closeSearchBtn');
@@ -764,6 +752,7 @@
       `).join('');
     };
 
+    // Start App
     initApp();
   </script>
 </body>
