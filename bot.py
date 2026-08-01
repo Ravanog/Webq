@@ -1,4 +1,6 @@
 import os
+import json  # <--- ADD THIS AT THE VERY TOP
+# ... rest of your imports
 import re
 import sys
 import logging
